@@ -1,18 +1,47 @@
-// server.js - SQLite Authentication Backend
+FoodShare Backend with Frontend Serving
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
 const app = express();
 const PORT = 5000;
 
 // Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname))); //
+
+// CORS middleware
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     next();
+});
+
+// Serve frontend files
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/donate', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/community', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // Initialize SQLite database
@@ -164,6 +193,19 @@ app.post('/api/donate-food', (req, res) => {
     );
 });
 
+// Get all donations (for community view)
+app.get('/api/donations', (req, res) => {
+    db.all(
+        'SELECT * FROM food_donations WHERE collected = FALSE ORDER BY created_at DESC',
+        (err, donations) => {
+            if (err) {
+                return res.json({ success: false, error: 'Failed to fetch donations' });
+            }
+            res.json({ success: true, donations });
+        }
+    );
+});
+
 // Get user donations
 app.get('/api/user-donations/:donorName', (req, res) => {
     const donorName = req.params.donorName;
@@ -196,6 +238,26 @@ app.post('/api/confirm-collection', (req, res) => {
     );
 });
 
+// Post community need
+app.post('/api/post-need', (req, res) => {
+    const { foodName, quantity, unit, description, location, postedBy, neededBy, urgency } = req.body;
+
+    if (!foodName || !quantity || !unit || !location || !postedBy || !neededBy) {
+        return res.json({ success: false, error: 'Missing required fields' });
+    }
+
+    db.run(
+        `INSERT INTO community_needs (food_name, quantity, unit, description, location, posted_by, needed_by, urgency) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [foodName, quantity, unit, description, location, postedBy, neededBy, urgency || 'red'],
+        function(err) {
+            if (err) {
+                return res.json({ success: false, error: 'Failed to post need' });
+            }
+            res.json({ success: true, needId: this.lastID });
+        }
+    );
+});
+
 // Community needs
 app.get('/api/community-needs', (req, res) => {
     db.all(
@@ -204,12 +266,12 @@ app.get('/api/community-needs', (req, res) => {
             if (err) {
                 return res.json({ success: false, error: 'Failed to fetch community needs' });
             }
-            res.json({ success: true, needs: [] });
+            res.json({ success: true, needs });
         }
     );
 });
 
-// Stats endpoint - SIMPLE COUNTING
+// Stats endpoint
 app.get('/api/stats', (req, res) => {
     // Get total donations count
     db.get('SELECT COUNT(*) as total FROM food_donations', (err, donationsResult) => {
@@ -226,7 +288,7 @@ app.get('/api/stats', (req, res) => {
         
         const mealsShared = donationsResult.total || 0;
         
-        // Get meals received (collected donations) - SIMPLE COUNT
+        // Get meals received (collected donations)
         db.get('SELECT COUNT(*) as total FROM food_donations WHERE collected = TRUE', (err, collectedResult) => {
             if (err) {
                 return res.json({ 
@@ -269,9 +331,20 @@ app.get('/api/stats', (req, res) => {
     });
 });
 
+// 404 handler for API routes
+app.use('/api/*', (req, res) => {
+    res.status(404).json({ success: false, error: 'API endpoint not found' });
+});
+
+// Catch-all handler - serve index.html for SPA routing
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Start server
 app.listen(PORT, () => {
-    console.log(`🚀 FoodShare backend running on http://localhost:${PORT}`);
+    console.log(`🚀 FoodShare full-stack running on http://localhost:${PORT}`);
+    console.log(`📊 API endpoints available at http://localhost:${PORT}/api`);
 });
 
 process.on('SIGINT', () => {
