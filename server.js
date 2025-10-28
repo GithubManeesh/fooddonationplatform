@@ -1,4 +1,3 @@
-FoodShare Backend with Frontend Serving
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const sqlite3 = require('sqlite3').verbose();
