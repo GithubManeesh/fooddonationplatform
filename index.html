@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodShare - Community Food Donation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">🍽️ FoodShare</h1>
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#about" class="nav-link">About Us</a>
+                    <a href="#contact" class="nav-link">Contact Us</a>
+                </div>
+                <div class="nav-links">
+                    <span id="userWelcome" class="user-welcome" style="display: none;"></span>
+                    <button id="profileBtn" class="profile-btn" style="display: none;">👤 Profile</button>
+                    <button id="logoutBtn" class="logout-btn" style="display: none;">🚪 Logout</button>
+                    <button id="loginBtn" class="btn-login">Login</button>
+                    <button id="registerNavBtn" class="btn-register">Register</button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Section -->
+        <section id="home" class="page-section">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="hero-content">
+                        <div class="hero-text">
+                            <h2>Every Meal Matters in the Fight Against Hunger</h2>
+                            <p>While 1 in 9 people go to bed hungry, we waste 40% of our food. Join us in bridging this gap.</p>
+                            <div class="hero-buttons">
+                                <button id="heroDonateBtn" class="btn-hero-special">Donate Now!</button>
+                            </div>
+                            <div class="hero-stats">
+                                <div class="stat">
+                                    <span class="stat-number" id="totalMeals">0</span>
+                                    <span class="stat-label">Meals Shared</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number" id="activeDonations">0</span>
+                                    <span class="stat-label">Meals Received</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number" id="communityMembers">0</span>
+                                    <span class="stat-label">Users Registered</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hero-image">
+                            <div class="food-donation-image">
+                                <div class="image-placeholder">
+                                    <span>🥗</span>
+                                    <p>Sharing Food, Saving Lives</p>
+                                    <div class="glass-reflection"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How It Works Section -->
+            <section class="how-it-works">
+                <div class="container">
+                    <h2>Be the Change - How You Can Help</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-icon">❤️</div>
+                            <h3>1. Register with Compassion</h3>
+                            <p>Join as a donor. Your registration could mean a meal for a hungry child.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">🍕</div>
+                            <h3>2. Share with Purpose</h3>
+                            <p>Post Remaining or Leftover food that would otherwise be wasted. Every donation counts.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">🤝</div>
+                            <h3>3. Connect with Care</h3>
+                            <p>Receivers find nourishment, donors find purpose. Together, we fight hunger.</p>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">🌍</div>
+                            <h3>4. Create Impact</h3>
+                            <p>Reduce waste, feed communities, and build a kinder world.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Food Listings Section -->
+            <section class="listings-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Urgent Food Needs - Your Chance to Help</h2>
+                        <div class="filters">
+                            <select id="urgencyFilter">
+                                <option value="all">All Urgency Levels</option>
+                                <option value="red">Urgent (Today)</option>
+                                <option value="orange">Use Tomorrow</option>
+                                <option value="yellow">Use Soon</option>
+                                <option value="green">Fresh</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="foodContainer" class="food-container">
+                        <!-- Food cards will be dynamically added here -->
+                        <div class="empty-state">
+                            <div class="empty-icon">😊</div>
+                            <h3>No urgent community needs right now</h3>
+                            <p>FoodShare has no current urgent requirements. Check back later for community needs!</p>
+                            <button id="emptyDonateBtn" class="btn-primary">Donate Food to Community</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="page-section">
+            <div class="about-hero">
+                <div class="container">
+                    <h1>Our Mission: No One Hungry, No Food Wasted</h1>
+                    <p class="hero-subtitle">Transforming Leftovers into sustenance, one meal at a time</p>
+                </div>
+            </div>
+
+            <div class="about-content">
+                <div class="container">
+                    <!-- The Problem Section -->
+                    <section class="problem-section">
+                        <h2>The Heartbreaking Reality</h2>
+                        <div class="problem-stats">
+                            <div class="problem-stat">
+                                <span class="stat-number">20-22%</span>
+                                <span class="stat-label">of food produced in India is wasted</span>
+                            </div>
+                            <div class="problem-stat">
+                                <span class="stat-number">2 in 10</span>
+                                <span class="stat-label">people go to bed hungry every night</span>
+                            </div>
+                            <div class="problem-stat">
+                                <span class="stat-number">12%</span>
+                                <span class="stat-label">of our population is undernourished</span>
+                            </div>
+                        </div>
+                        
+                        <div class="problem-description">
+                            <p>While restaurants, cafes, and households throw away perfectly good food, millions of our fellow citizens struggle to find their next meal. Children go to school hungry, elderly choose between medicine and food, and families face the pain of empty plates.</p>
+                            
+                            <p>This isn't just about waste—it's about <strong>human dignity</strong>. It's about the single mother who skips meals so her children can eat. The student who can't concentrate in class because of hunger. The senior citizen who survives on tea and biscuits.</p>
+                        </div>
+                    </section>
+
+                    <!-- Our Story Section -->
+                    <section class="story-section">
+                        <h2>Why FoodShare Exists</h2>
+                        <div class="story-content">
+                            <div class="story-text">
+                                <p>We started FoodShare after witnessing a heartbreaking contradiction: dumpsters filled with untouched food while homeless shelters turned people away due to shortages.</p>
+                                
+                                <p>We realized the problem wasn't scarcity—it was <strong>distribution</strong>. The food exists. The hungry exist. They just needed a bridge.</p>
+                                
+                                <p>FoodShare is that bridge. We connect those who have extra with those who have empty. We turn surplus into survival, waste into wonder, and compassion into action.</p>
+                                
+                                <blockquote class="mission-quote">
+                                    "We don't need to produce more food. We need to share what we already have with more love."
+                                </blockquote>
+                            </div>
+                            <div class="story-image">
+                                <div class="placeholder-image">
+                                    <span>🌍</span>
+                                    <p>Building a hunger-free community</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Impact Stories Section -->
+                    <section class="stories-section">
+                        <h2>Lives Changed Through Sharing</h2>
+                        <div class="stories-grid">
+                            <div class="story-card">
+                                <div class="story-icon">👩‍🍳</div>
+                                <h3>Riya's Bakery</h3>
+                                <p>"Instead of throwing away day-old bread, we now feed 50 families weekly. Seeing the gratitude in mothers' eyes has given our business new purpose."</p>
+                            </div>
+                            <div class="story-card">
+                                <div class="story-icon">👨‍🎓</div>
+                                <h3>College Students</h3>
+                                <p>"As struggling students, the free meals from campus events have been a lifesaver. We can focus on studies instead of hunger pains."</p>
+                            </div>
+                            <div class="story-card">
+                                <div class="story-icon">👵</div>
+                                <h3>Senior Community</h3>
+                                <p>"On my pension, fresh fruits were a luxury. Now I get nutritious food that keeps me healthy and connected to my community."</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="page-section">
+            <div class="contact-hero">
+                <div class="container">
+                    <h1>Get in Touch - Together We're Stronger</h1>
+                    <p>Have questions? Do you have any Queries? We'd love to hear from you.</p>
+                </div>
+            </div>
+
+            <div class="contact-content">
+                <div class="container">
+                    <div class="contact-grid">
+                        <div class="contact-info">
+                            <h2>Let's Connect</h2>
+                            <p>Whether you're a restaurant owner, community leader, or someone who wants to make a difference—your involvement matters.</p>
+                            
+                            <div class="contact-details">
+                                <div class="contact-item">
+                                    <div class="contact-icon">📧</div>
+                                    <div>
+                                        <h4>Email Us</h4>
+                                        <p>donatetous@foodshare.org</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">📞</div>
+                                    <div>
+                                        <h4>Call Us</h4>
+                                        <p>+91 90010 00100</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">📍</div>
+                                    <div>
+                                        <h4>Visit Us</h4>
+                                        <p>Hyderabad<br>Telangana, India 500001</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="contact-form-container">
+                            <h3>Send us a Message</h3>
+                            <form class="contact-form">
+                                <div class="form-group">
+                                    <label for="contactName">Your Name *</label>
+                                    <input type="text" id="contactName" name="contactName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactEmail">Email Address *</label>
+                                    <input type="email" id="contactEmail" name="contactEmail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactSubject">Subject</label>
+                                    <select id="contactSubject" name="contactSubject">
+                                        <option value="">Select a topic</option>
+                                        <option value="partnership">Business Partnership</option>
+                                        <option value="volunteer">Volunteer Opportunity</option>
+                                        <option value="donation">Queries and Complaints</option>
+                                        <option value="technical">Technical Support</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactMessage">Your Message *</label>
+                                    <textarea id="contactMessage" name="contactMessage" rows="5" required placeholder="How can we help you?"></textarea>
+                                </div>
+                                <button type="submit" class="btn-submit">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Login to FoodShare</h2>
+            <form id="loginForm" class="modal-form">
+                <div class="form-group">
+                    <label for="loginUsername">Username *</label>
+                    <input type="text" id="loginUsername" name="loginUsername" required placeholder="Enter your username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Password *</label>
+                    <input type="password" id="loginPassword" name="loginPassword" required placeholder="Enter your password">
+                </div>
+                
+                <div id="loginError" class="error-message" style="display: none;">
+                    Invalid username or password!
+                </div>
+                
+                <button type="submit" class="btn-submit">Login</button>
+                
+                <p style="text-align: center; margin-top: 1rem;">
+                    Don't have an account? <a href="#" id="switchToRegister" style="color: #4caf50;">Register here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Join FoodShare Community</h2>
+            <form id="registrationForm" class="modal-form">
+                <div class="form-group">
+                    <label for="userName">Your Name or Business Name *</label>
+                    <input type="text" id="userName" name="userName" required placeholder="e.g., Riya's Bakery or Riya Sharma">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userUsername">Username *</label>
+                    <input type="text" id="userUsername" name="userUsername" required placeholder="Choose a username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userEmail">Email Address *</label>
+                    <input type="email" id="userEmail" name="userEmail" required placeholder="your@email.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userPassword">Password *</label>
+                    <input type="password" id="userPassword" name="userPassword" required placeholder="Create a password" minlength="8" maxlength="15">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password *</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Confirm your password">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userType">I am a... *</label>
+                    <select id="userType" name="userType" required>
+                        <option value="">Select your type</option>
+                        <option value="individual">Individual/Family</option>
+                        <option value="restaurant">Restaurant/Cafe</option>
+                        <option value="bakery">Bakery</option>
+                        <option value="catering">Catering Service</option>
+                        <option value="charity">Charity/Organization</option>
+                        <option value="grocery">Others</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userLocation">Your Area/Location *</label>
+                    <input type="text" id="userLocation" name="userLocation" required placeholder="e.g., Uppal,Hyderabad or Road No:9 Ghatkesar,Hyderabad">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userPhone">Phone Number *</label>
+                    <input type="tel" id="userPhone" name="userPhone" placeholder="+91XXXXXXXXX">
+                </div>
+                
+                <div id="registerError" class="error-message" style="display: none;"></div>
+                
+                <button type="submit" class="btn-submit">Join FoodShare</button>
+                
+                <p style="text-align: center; margin-top: 1rem;">
+                    Already have an account? <a href="#" id="switchToLogin" style="color: #4caf50;">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Donate Food Modal -->
+    <div id="donateModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Donate Food</h2>
+            <form id="donateForm" class="modal-form">
+                <div class="form-group">
+                    <label for="foodName">Food Item *</label>
+                    <input type="text" id="foodName" name="foodName" required placeholder="e.g., Fresh Bread, Cooked Rice, Vegetables">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quantity">Quantity *</label>
+                        <input type="number" id="quantity" name="quantity" step="0.1" min="0.1" required placeholder="5">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="unit">Unit *</label>
+                        <select id="unit" name="unit" required>
+                            <option value="kg">Kilograms (kg)</option>
+                            <option value="g">Grams (g)</option>
+                            <option value="liter">Liters</option>
+                            <option value="ml">Milliliters (ml)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="estimationDateTime">Estimation Expiry Day/Time *</label>
+                    <input type="text" id="estimationDateTime" name="estimationDateTime" required placeholder="e.g., Today 6:00 PM or Tomorrow 10:00 AM">
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Pickup Location *</label>
+                    <input type="text" id="location" name="location" required placeholder="e.g., 123 Main St, Downtown">
+                </div>
+                
+                <!-- Updated Time Selection Section -->
+                <div class="form-group">
+                    <label for="pickupTime">Preferred Pickup Time *</label>
+                    <div class="time-selection-container">
+                        <div class="time-input-group">
+                            <label>Start Time:</label>
+                            <div class="time-picker">
+                                <select id="startHour" class="time-hour">
+                                    <option value="">HH</option>
+                                    <!-- Hours 1-12 -->
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <span>:</span>
+                                <select id="startMinute" class="time-minute">
+                                    <option value="">MM</option>
+                                    <!-- Minutes in 15-min intervals -->
+                                    <option value="00">00</option>
+                                    <option value="15">15</option>
+                                    <option value="30">30</option>
+                                    <option value="45">45</option>
+                                </select>
+                                <select id="startAmPm" class="time-ampm">
+                                    <option value="">AM/PM</option>
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="time-input-group">
+                            <label>End Time:</label>
+                            <div class="time-picker">
+                                <select id="endHour" class="time-hour">
+                                    <option value="">HH</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <span>:</span>
+                                <select id="endMinute" class="time-minute">
+                                    <option value="">MM</option>
+                                    <option value="00">00</option>
+                                    <option value="15">15</option>
+                                    <option value="30">30</option>
+                                    <option value="45">45</option>
+                                </select>
+                                <select id="endAmPm" class="time-ampm">
+                                    <option value="">AM/PM</option>
+                                    <option value="AM">AM</option>
+                                    <option value="PM">PM</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <small>Select your available time window for pickup</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Additional Notes (Optional)</label>
+                    <textarea id="description" name="description" placeholder="Any special instructions, ingredients, or details..."></textarea>
+                </div>
+                
+                <!-- Impact Estimation Display -->
+                <div id="impactEstimation" class="impact-estimation" style="display: none;">
+                    <h4>📊 Estimated Impact:</h4>
+                    <p id="estimationText">This donation can feed approximately <strong>X people</strong>!</p>
+                </div>
+                
+                <button type="submit" class="btn-submit">Post Donation</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Your FoodShare Profile</h2>
+            <div id="profileContent" class="profile-content">
+                <!-- Profile content will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 FoodShare. Built with ❤️ for community welfare.</p>
+            <p class="footer-tagline">Reducing food waste, one meal at a time. Lets Make BIGGER impact on our society.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
