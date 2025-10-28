@@ -2,12 +2,14 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
 const app = express();
 const PORT = 5000;
 
 // Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname))); // Serve HTML, CSS, JS files
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -66,6 +68,11 @@ function initializeDatabase() {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
 }
+
+// Serve the main page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -272,6 +279,9 @@ app.get('/api/stats', (req, res) => {
 // Start server
 app.listen(PORT, () => {
     console.log(`🚀 FoodShare backend running on http://localhost:${PORT}`);
+    console.log(`📊 Open your browser and visit: http://localhost:${PORT}`);
+    console.log(`💡 Make sure all files are in the same folder:`);
+    console.log(`   - server.js, index.html, style.css, script.js, package.json`);
 });
 
 process.on('SIGINT', () => {
